@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Emergency Vaccines Data Pack — Rabies & Tetanus (Raw Notes)</title>
+
+  <style>
+    /* ========= Page / Print ========= */
+    @page { margin: 20mm; }
+    @media print{
+      a{ color:#0b57d0; text-decoration:none; border:0; }
+      .page{ box-shadow:none; border:none; border-radius:0; margin:0; }
+      .no-print{ display:none !important; }
+      .avoid-break{ break-inside:avoid; }
+    }
+
+    :root{
+      --ink:#111827;
+      --muted:#4b5563;
+      --line:#e5e7eb;
+      --soft:#f9fafb;
+      --accent:#0b57d0;
+      --accent2:#2563eb;
+      --warn:#b45309;
+      --danger:#b91c1c;
+      --ok:#15803d;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --serif: "Times New Roman", Times, Georgia, serif;
+      --sans: system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif;
+    }
+
+    body{
+      margin:0;
+      background:#eef2f7;
+      color:var(--ink);
+      font-family:var(--serif); /* Word-ish */
+      line-height:1.55;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page{
+      max-width: 980px;
+      margin: 18px auto;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:18px;
+      overflow:hidden;
+      box-shadow: 0 10px 30px rgba(2,6,23,.08);
+    }
+
+    header{
+      padding: 22px 24px 14px;
+      border-bottom:1px solid var(--line);
+      background: linear-gradient(135deg, #eff6ff 0%, #ffffff 70%);
+      font-family:var(--sans);
+    }
+
+    .kicker{
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      letter-spacing:.02em;
+    }
+
+    h1{
+      margin: 8px 0 6px;
+      font-size: 28px;
+      line-height: 1.2;
+      color:#0f172a;
+    }
+
+    .subtitle{
+      margin: 0;
+      font-size: 14px;
+      color:var(--muted);
+      max-width: 80ch;
+    }
+
+    main{
+      padding: 18px 24px 28px;
+    }
+
+    /* ========= TOC ========= */
+    .toc{
+      margin: 16px 0 18px;
+      padding: 14px 14px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: var(--soft);
+      font-family:var(--sans);
+    }
+    .toc .title{
+      font-family:var(--mono);
+      font-size:12px;
+      color:var(--muted);
+      margin-bottom:8px;
+    }
+    .toc ol{
+      margin:0;
+      padding-left: 18px;
+    }
+    .toc li{ margin: 6px 0; }
+    .toc a{
+      color: var(--accent);
+      text-decoration:none;
+      border-bottom:1px dotted #93c5fd;
+    }
+
+    /* ========= Headings ========= */
+    h2{
+      margin: 22px 0 10px;
+      font-size: 20px;
+      padding-left: 10px;
+      border-left: 5px solid var(--accent);
+      font-family:var(--sans);
+    }
+    h3{
+      margin: 14px 0 8px;
+      font-size: 16px;
+      font-family:var(--sans);
+    }
+    h4{
+      margin: 12px 0 6px;
+      font-size: 14px;
+      font-family:var(--sans);
+      color:#0f172a;
+    }
+
+    p{ margin: 8px 0; }
+    ul{ margin: 8px 0; padding-left: 20px; }
+    li{ margin: 6px 0; }
+
+    .muted{ color: var(--muted); }
+    .mono{ font-family: var(--mono); }
+
+    /* ========= Callouts ========= */
+    .callout{
+      border: 1px solid var(--line);
+      border-left: 6px solid var(--accent2);
+      background: #f0f7ff;
+      border-radius: 14px;
+      padding: 12px 14px;
+      margin: 10px 0;
+      font-family:var(--sans);
+    }
+    .callout .label{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .callout.warn{ border-left-color: var(--warn); background:#fff7ed; }
+    .callout.danger{ border-left-color: var(--danger); background:#fef2f2; }
+    .callout.ok{ border-left-color: var(--ok); background:#f0fdf4; }
+
+    /* ========= Tables ========= */
+    table{
+      width:100%;
+      border-collapse: collapse;
+      border:1px solid var(--line);
+      border-radius: 14px;
+      overflow:hidden;
+      background:#fff;
+      margin: 10px 0 14px;
+      font-family:var(--sans);
+    }
+    th, td{
+      border-bottom:1px solid var(--line);
+      padding: 10px 10px;
+      vertical-align: top;
+      font-size: 13px;
+    }
+    th{
+      background:#f3f4f6;
+      text-align:left;
+      font-weight:700;
+    }
+    tr:last-child td{ border-bottom:none; }
+
+    /* ========= Footer ========= */
+    footer{
+      padding: 12px 24px 18px;
+      border-top:1px solid var(--line);
+      background: #fbfdff;
+      color: var(--muted);
+      font-size: 12px;
+      font-family: var(--mono);
+    }
+
+    /* ========= Small utility ========= */
+    .divider{
+      margin: 18px 0;
+      border:0;
+      border-top: 2px dashed var(--line);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page">
+
+ 
+    </header>
+
+    <main>
+
+      <section class="toc avoid-break">
+        <div class="title">TABLE OF CONTENTS</div>
+        <ol>
+          <li><a href="#core">Core Concepts &amp; Definitions</a></li>
+          <li><a href="#rabies-overview">Rabies: Overview</a></li>
+          <li><a href="#rabies-immediate">Rabies: Immediate Actions After Bite/Scratch</a></li>
+          <li><a href="#rabies-prep">Rabies PrEP (Pre-Exposure Prophylaxis)</a></li>
+          <li><a href="#rabies-pep">Rabies PEP (Post-Exposure Prophylaxis)</a></li>
+          <li><a href="#rabies-hrig">HRIG / Rabies Immunoglobulin</a></li>
+          <li><a href="#rabies-who-id">WHO Intradermal (ID) Rabies PEP Regimens</a></li>
+          <li><a href="#tetanus-overview">Tetanus: Overview</a></li>
+          <li><a href="#tetanus-clinical">Tetanus: Incubation, Forms, Clinical Notes</a></li>
+          <li><a href="#tetanus-wounds">Tetanus: Wound Risk + Post-Injury Prevention Workflow</a></li>
+          <li><a href="#tetanus-vaccines">Tetanus Vaccines: Types, Routine Schedules, Boosters</a></li>
+          <li><a href="#tetanus-tig">TIG: Prophylaxis vs Treatment (Dose Differences)</a></li>
+          <li><a href="#comparison">Quick Comparison Table (Raw)</a></li>
+          <li><a href="#sources">Sources</a></li>
+        </ol>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- CORE -->
+      <!-- ========================================================= -->
+      <section id="core">
+        <h2>0) Core Concepts &amp; Definitions</h2>
+
+        <h3>Vaccine vs Immunoglobulin (Serum)</h3>
+        <ul>
+          <li><b>Vaccine (active immunization):</b> stimulates the immune system to produce antibodies; takes time to work but provides longer protection.</li>
+          <li><b>Immunoglobulin / Serum (passive immunization):</b> provides immediate ready-made antibodies; short-term protection; used to bridge the time until vaccine-induced immunity develops.</li>
+        </ul>
+
+        <h3>PrEP vs PEP</h3>
+        <ul>
+          <li><b>PrEP (Pre-Exposure Prophylaxis):</b> rabies vaccination given <b>before</b> exposure for higher-risk individuals.</li>
+          <li><b>PEP (Post-Exposure Prophylaxis):</b> rabies vaccination given <b>after</b> exposure (bite/scratch/saliva to wound or mucosa).</li>
+        </ul>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ========================================================= -->
+      <!-- RABIES -->
+      <!-- ========================================================= -->
+      <section id="rabies-overview">
+        <h2>1) Rabies — Overview (Raw)</h2>
+
+        <h3>1.1 What is rabies?</h3>
+        <p>
+          Rabies is a viral disease (Lyssavirus) affecting the central nervous system.
+          Once clinical symptoms develop, rabies is almost always fatal—so prevention is critical.
+        </p>
+
+        <h3>1.2 Transmission</h3>
+        <ul>
+          <li>Virus is present in <b>saliva</b> of infected animals.</li>
+          <li>Exposure routes: <b>bites</b>, <b>scratches</b> that break the skin, or saliva contacting <b>open wounds</b> or <b>mucous membranes</b> (eyes/mouth).</li>
+        </ul>
+
+        <h3>1.3 Incubation period</h3>
+        <p class="muted">
+          Often 1–3 months, but can be shorter or longer depending on location of exposure (closer to CNS often shorter),
+          severity, viral inoculum, and host factors.
+        </p>
+
+        <h3>1.4 Clinical course (reference)</h3>
+        <ul>
+          <li>Early: fever, malaise, headache; tingling/pain at exposure site.</li>
+          <li>Later: hydrophobia, aerophobia, agitation, confusion, paralysis → coma/death.</li>
+        </ul>
+      </section>
+
+      <section id="rabies-immediate">
+        <h2>2) Rabies — Immediate Actions After Bite/Scratch</h2>
+
+        <div class="callout ok avoid-break">
+          <div class="label">Immediate wound care (CDC concept)</div>
+          <ul>
+            <li>Begin all rabies PEP with <b>immediate and thorough cleansing</b> with soap and water.</li>
+            <li>If available, irrigate with a virucidal agent (e.g., <b>povidone-iodine</b>).</li>
+          </ul>
+        </div>
+
+        <div class="callout warn avoid-break">
+     
+          <ul>
+            <li>Do not delay medical assessment after a risky exposure.</li>
+            <li>Wound closure decisions vary; priority is cleansing + exposure risk management.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="rabies-prep">
+        <h2>3) Rabies PrEP (Pre-Exposure Prophylaxis) — Detailed</h2>
+
+        <h3>3.1 Who may need PrEP (examples)</h3>
+        <p class="muted">
+          CDC risk-category examples typically include: laboratory work with rabies virus, frequent bat contact/high-density
+          bat environments, many veterinary/wildlife professions, and certain travelers to dog-rabies endemic areas with limited
+          access to care (risk-based).
+        </p>
+
+        <h3>3.2 PrEP schedule (CDC/ACIP)</h3>
+        <div class="callout avoid-break">
+          <div class="label">PrEP schedule</div>
+          <ul>
+            <li><b>2-dose IM series:</b> Day 0 and Day 7</li>
+          </ul>
+        </div>
+
+        <h3>3.3 Risk-based maintenance (raw reference)</h3>
+        <ul>
+          <li><b>Risk category 1:</b> 2-dose series + titer checks every 6 months.</li>
+          <li><b>Risk category 2:</b> 2-dose series + titer checks every 2 years.</li>
+          <li><b>Risk category 3 (sustained risk &gt; 3 years):</b> 2-dose series + either one-time titer check (year 1–3) OR 1-dose booster (3 weeks to 3 years after first vaccine in the 2-dose series).</li>
+        </ul>
+
+        <div class="callout warn avoid-break">
+          <div class="label">Key point</div>
+          <ul>
+            <li>PrEP does <b>not</b> remove the need for PEP after exposure.</li>
+            <li>Previously vaccinated people receive shorter PEP and <b>do not get RIG</b>.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="rabies-pep">
+        <h2>4) Rabies PEP (Post-Exposure Prophylaxis) — Full Details</h2>
+
+        <h3>4.1 Key decision: previously vaccinated vs not</h3>
+        <p class="muted">
+          Rabies PEP differs depending on prior rabies vaccination status. Management typically includes wound care,
+          rabies vaccine, and sometimes rabies immunoglobulin (RIG/HRIG) depending on scenario.
+        </p>
+
+        <h3>4.2 Not previously vaccinated (CDC)</h3>
+        <table class="avoid-break">
+          <thead>
+            <tr><th>Component</th><th>Details</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Wound care</b></td>
+              <td>Immediate cleansing with soap/water; povidone-iodine if available.</td>
+            </tr>
+            <tr>
+              <td><b>Vaccine</b></td>
+              <td>IM 1.0 mL on Days <b>0, 3, 7, 14</b>.</td>
+            </tr>
+            <tr>
+              <td><b>Immunocompromised</b></td>
+              <td>Add a 5th vaccine dose on <b>Day 28</b>.</td>
+            </tr>
+            <tr>
+              <td><b>HRIG</b></td>
+              <td>Used as indicated (see HRIG section).</td>
+            </tr>
+            <tr>
+              <td><b>Injection site</b></td>
+              <td>Deltoid (adults); anterolateral thigh acceptable for children; <b>no gluteal</b>.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>4.3 Previously vaccinated (CDC)</h3>
+        <table class="avoid-break">
+          <thead>
+            <tr><th>Component</th><th>Details</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>RIG / HRIG</b></td>
+              <td><b>Do not administer</b>.</td>
+            </tr>
+            <tr>
+              <td><b>Vaccine</b></td>
+              <td>IM 1.0 mL on Days <b>0 and 3</b>.</td>
+            </tr>
+            <tr>
+              <td><b>Injection site</b></td>
+              <td>Deltoid (adults) or anterolateral thigh (children); <b>no gluteal</b>.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="callout ok avoid-break">
+          <div class="label">Contraindications / pregnancy / age (CDC concept)</div>
+          <ul>
+            <li>No known contraindications for rabies vaccination when PEP is needed.</li>
+            <li>Pregnancy is not a contraindication for rabies PEP.</li>
+            <li>Suitable for all age groups including infants and children.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="rabies-hrig">
+        <h2>5) HRIG / Rabies Immunoglobulin — Full Detail</h2>
+
+        <div class="callout avoid-break">
+          <div class="label">What HRIG does</div>
+          <ul>
+            <li>Provides neutralizing antibodies at the exposure site until vaccine-mediated antibodies develop.</li>
+          </ul>
+        </div>
+
+        <div class="callout avoid-break">
+          <div class="label">Dose (CDC)</div>
+          <ul>
+            <li><b>20 IU/kg</b> for all age groups (including children).</li>
+          </ul>
+        </div>
+
+        <div class="callout avoid-break">
+          <div class="label">Administration (CDC)</div>
+          <ul>
+            <li>Infiltrate as much as feasible directly into/around the wound.</li>
+            <li>Any remaining dose: IM at a site distant from vaccine injection site.</li>
+          </ul>
+        </div>
+
+        <div class="callout warn avoid-break">
+          <div class="label">Key warnings (CDC)</div>
+          <ul>
+            <li>Do not administer HRIG in the same syringe as vaccine.</li>
+            <li>Do not exceed the recommended dose.</li>
+            <li>Separate anatomical locations for HRIG vs vaccine to avoid neutralization at the same site.</li>
+          </ul>
+        </div>
+
+        <div class="callout avoid-break">
+          <div class="label">Timing window if missed initially (CDC)</div>
+          <ul>
+            <li>If HRIG wasn’t given on Day 0, it can be administered up to and including <b>Day 7</b> of the PEP series.</li>
+          </ul>
+        </div>
+
+        <div class="callout ok avoid-break">
+          <div class="label">Previously vaccinated</div>
+          <ul>
+            <li>HRIG is not given to previously vaccinated persons.</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="rabies-who-id">
+        <h2>6) WHO Intradermal (ID) Rabies PEP Regimens — Extra Reference</h2>
+
+        <div class="callout avoid-break">
+          <div class="label">WHO ID schedule (raw reference)</div>
+          <ul>
+            <li><b>One-week, 2-site ID:</b> 0.1 mL on Days <b>0, 3, 7</b>.</li>
+            <li>If previously immunized: <b>1-site ID</b> 0.1 mL on Days <b>0 and 3</b>.</li>
+            <li>Category III exposures: immunoglobulin + vaccine + immediate wound washing.</li>
+            <li>Choice of IM vs ID depends on local protocol, product labeling/approval, and trained staff.</li>
+          </ul>
+        </div>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ========================================================= -->
+      <!-- TETANUS -->
+      <!-- ========================================================= -->
+      <section id="tetanus-overview">
+        <h2>7) Tetanus — Overview (Raw)</h2>
+
+        <h3>7.1 What is tetanus?</h3>
+        <p>
+          Tetanus is an acute, potentially fatal disease caused by <b>Clostridium tetani</b>, an environmental bacterium whose spores are widely present in
+          soil, dust, and animal feces. The clinical disease is mainly toxin-mediated (<b>tetanospasmin</b>), affecting the nervous system and leading to muscle rigidity and painful spasms.
+        </p>
+
+        <div class="callout avoid-break">
+          <div class="label">Key prevention principle</div>
+          <ul>
+            <li>No person-to-person transmission. Risk is related to <b>wound contamination</b> + favorable conditions (deep puncture/devitalized tissue/anaerobic environment).</li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="tetanus-clinical">
+        <h2>8) Tetanus — Incubation, Forms, Clinical Notes</h2>
+
+        <h3>8.1 Incubation period (and what it predicts)</h3>
+        <ul>
+          <li>Commonly cited incubation: typically around <b>3–21 days</b> (average ~8 days in CDC materials); shorter incubation tends to correlate with more severe disease.</li>
+          <li>Neonatal tetanus: symptoms often appear <b>4–14 days</b> after birth (average about 7 days) in reference materials.</li>
+          <li>Cephalic tetanus: incubation may be very short (e.g., 1–2 days in some summaries).</li>
+        </ul>
+
+        <h3>8.2 Clinical forms (classification)</h3>
+        <ul>
+          <li><b>Generalized tetanus</b> (most common)</li>
+          <li><b>Localized tetanus</b> (uncommon; can progress to generalized)</li>
+          <li><b>Cephalic tetanus</b> (rare; cranial nerve involvement; can progress to generalized)</li>
+          <li><b>Neonatal tetanus</b> (public health relevance; linked to maternal immunization and clean delivery/cord care)</li>
+        </ul>
+
+        <h3>8.3 Generalized tetanus — typical clinical picture (reference)</h3>
+        <ul>
+          <li>Often begins with <b>trismus (lockjaw)</b>, followed by neck stiffness, dysphagia, abdominal rigidity.</li>
+          <li>Autonomic instability may occur (e.g., sweating, elevated BP, tachycardia episodes).</li>
+          <li>Spasms can persist for weeks; recovery may take months.</li>
+        </ul>
+      </section>
+
+      <section id="tetanus-wounds">
+        <h2>9) Tetanus — Wound Risk + Post-Injury Prevention Workflow</h2>
+
+        <h3>9.1 “Rust” misconception (raw teaching note)</h3>
+        <p>
+          Rust is not the cause of tetanus. It is a proxy for a typical scenario: a dirty object causing a puncture wound.
+          The real risk factors include spore contamination + conditions favoring germination/toxin production (deep puncture, devitalized tissue, anaerobic environment).
+        </p>
+
+        <h3>9.2 Wound categories used in decisions (CDC style)</h3>
+        <table class="avoid-break">
+          <thead>
+            <tr><th>Category</th><th>Meaning</th><th>Typical examples / risk logic (raw)</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Clean &amp; minor wounds</b></td>
+              <td>Low tetanus risk.</td>
+              <td>Superficial, clean cuts; minimal contamination; minimal tissue damage.</td>
+            </tr>
+            <tr>
+              <td><b>Dirty or major wounds</b></td>
+              <td>Higher tetanus risk (especially if devitalized tissue).</td>
+              <td>Puncture wounds; wounds contaminated with dirt/soil/feces/saliva; crush injuries; burns; compound fractures; wounds with necrotic tissue; etc.</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>9.3 Post-injury prevention workflow (structured)</h3>
+
+        <div class="callout ok avoid-break">
+          <div class="label">Step 1 — Wound care</div>
+          <ul>
+            <li>Clean all wounds.</li>
+            <li>Remove dirt/foreign material.</li>
+            <li>Remove/debride necrotic or devitalized tissue when present.</li>
+          </ul>
+        </div>
+
+        <div class="callout warn avoid-break">
+          <div class="label">Step 2 — Antibiotics note (raw)</div>
+          <ul>
+            <li>Antibiotic prophylaxis specifically to prevent tetanus after an injury is generally not recommended in CDC-style guidance; however, infected wounds should be treated promptly.</li>
+          </ul>
+        </div>
+
+        <div class="callout avoid-break">
+          <div class="label">Step 3 — Decide on tetanus vaccination (CDC-style rules)</div>
+          <ul>
+            <li><b>No vaccine needed</b> (regardless of wound type) if BOTH:
+              <ul>
+                <li>Last tetanus vaccination &lt; <b>5 years</b> ago, AND</li>
+                <li>Primary series completed.</li>
+              </ul>
+            </li>
+            <li><b>Vaccination recommended</b>:
+              <ul>
+                <li><b>All wounds:</b> unknown history / unvaccinated / incomplete primary series.</li>
+                <li><b>Clean &amp; minor:</b> complete series + last dose ≥ <b>10 years</b>.</li>
+                <li><b>Dirty/major:</b> complete series + last dose ≥ <b>5 years</b>.</li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+
+        <div class="callout warn avoid-break">
+          <div class="label">Step 4 — Decide on TIG (Tetanus Immune Globulin) prophylaxis</div>
+          <ul>
+            <li><b>TIG is never indicated</b> for clean &amp; minor wounds.</li>
+            <li>For dirty/major wounds, TIG is typically indicated for:
+              <ul>
+                <li>Unknown vaccination history</li>
+                <li>Never vaccinated</li>
+                <li>Incomplete primary series</li>
+                <li>HIV or severe immunodeficiency (raw reference logic)</li>
+              </ul>
+            </li>
+            <li><b>Prophylaxis dose</b> often referenced in CDC guidance: <b>250 IU IM</b>.</li>
+          </ul>
+        </div>
+
+        <h3>9.4 “Guide table” logic (Pink Book style) — extra raw reference</h3>
+        <ul>
+          <li>If wound is not clean/minor AND immunization history is unknown or fewer than 3 tetanus toxoid doses → give <b>TIG + tetanus toxoid–containing vaccine</b> (raw rationale: TIG provides temporary antitoxin while vaccine builds longer immunity).</li>
+          <li>Some guide tables highlight TIG consideration in immunocompromised states even if prior vaccination exists (raw note for team reference).</li>
+        </ul>
+      </section>
+
+      <section id="tetanus-vaccines">
+        <h2>10) Tetanus Vaccines — Types, Routine Schedules, Boosters</h2>
+
+        <h3>10.1 Vaccine types (raw reference list)</h3>
+        <ul>
+          <li><b>DT</b>, <b>DTaP</b>, <b>Td</b>, <b>Tdap</b> (and combination products containing DTaP antigens).</li>
+          <li>High-level difference: some contain pertussis components (DTaP/Tdap) while DT/Td do not; antigen quantities differ between pediatric vs adolescent/adult formulations (raw note).</li>
+        </ul>
+
+        <h3>10.2 Routine childhood schedule (DTaP core — raw)</h3>
+        <ul>
+          <li>Primary series commonly listed: <b>2, 4, 6 months</b>.</li>
+          <li>Boosters: <b>15–18 months</b> and <b>4–6 years</b>.</li>
+          <li>Some schedules note: if dose 4 is given on/after 4th birthday, the 5th dose may be optional (raw schedule note).</li>
+        </ul>
+
+        <h3>10.3 Boosters (adolescents/adults)</h3>
+        <div class="callout avoid-break">
+          <div class="label">Booster logic (raw reference)</div>
+          <ul>
+            <li>Antitoxin levels decline over time → boosters commonly recommended every <b>10 years</b>.</li>
+            <li>For wound management, a booster may be needed earlier depending on wound risk (commonly the <b>5-year rule</b> for dirty/major wounds).</li>
+          </ul>
+        </div>
+
+        <h3>10.4 Contraindications &amp; precautions (raw reference notes)</h3>
+        <ul>
+          <li><b>Contraindications (general):</b> severe allergic reaction (anaphylaxis) to a vaccine component or following a prior dose; encephalopathy within 7 days after a pertussis-containing vaccine not attributable to another cause (applies to pertussis-containing products).</li>
+          <li><b>Precautions (examples):</b> moderate/severe acute illness; progressive/unstable neurologic disorder; Guillain-Barré syndrome within 6 weeks after a prior tetanus-toxoid vaccine; history of Arthus-type hypersensitivity reaction (defer toxoid vaccination until at least 10 years since last tetanus-toxoid vaccine).</li>
+          <li>Some guidance notes: if a high-risk wound exists, the risk of withholding vaccine may outweigh risk of administering it even during illness (raw note).</li>
+        </ul>
+
+        <h3>10.5 Safety (raw reference bullets)</h3>
+        <ul>
+          <li>Local reactions (pain/redness/swelling) are common; fever may occur; severe systemic reactions are rare.</li>
+          <li>Arthus-type reactions are rare but relevant to booster timing decisions.</li>
+        </ul>
+      </section>
+
+      <section id="tetanus-tig">
+        <h2>11) TIG — Prophylaxis vs Treatment (Dose Differences)</h2>
+
+        <div class="callout warn avoid-break">
+          <div class="label">Important distinction</div>
+          <ul>
+            <li><b>Prophylaxis TIG (after injury, if indicated):</b> commonly referenced dose <b>250 IU IM</b>.</li>
+            <li><b>Treatment TIG (actual tetanus disease):</b> some references recommend a single IM dose of <b>500 units</b>, sometimes with part infiltrated around the wound if identifiable (raw Pink Book-style note).</li>
+            <li>Rationale: TIG helps neutralize <b>unbound</b> toxin; it does not reverse toxin already bound to nerve endings.</li>
+          </ul>
+        </div>
+
+        <h3>Hospital management (raw, high-level)</h3>
+        <ul>
+          <li>Airway/ventilation support may be needed (spasms can compromise breathing).</li>
+          <li>Sedation and spasm control; ICU-level monitoring in severe cases.</li>
+          <li>Wound debridement and infection management as clinically appropriate.</li>
+        </ul>
+      </section>
+
+      <hr class="divider" />
+
+      <!-- ========================================================= -->
+      <!-- COMPARISON -->
+      <!-- ========================================================= -->
+      <section id="comparison">
+        <h2>12) Quick Comparison (Raw)</h2>
+
+        <table class="avoid-break">
+          <thead>
+            <tr><th>Item</th><th>Rabies</th><th>Tetanus</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>Pathogen</b></td>
+              <td>Virus</td>
+              <td>Bacteria + toxin</td>
+            </tr>
+            <tr>
+              <td><b>Typical exposure</b></td>
+              <td>Bites/scratches/saliva to wound or mucosa</td>
+              <td>Contaminated wounds, especially deep puncture/devitalized tissue</td>
+            </tr>
+            <tr>
+              <td><b>Emergency prevention</b></td>
+              <td>Wound care + vaccine ± HRIG</td>
+              <td>Wound care + vaccine ± TIG</td>
+            </tr>
+            <tr>
+              <td><b>Previously vaccinated</b></td>
+              <td>Short PEP; <b>no HRIG</b></td>
+              <td>Booster depends on time since last dose + wound risk; TIG depends on wound risk + immune/vaccine history</td>
+            </tr>
+            <tr>
+              <td><b>Key schedules (raw)</b></td>
+              <td>0,3,7,14 (+28 if immunocompromised); or 0,3 if previously vaccinated; WHO ID options exist</td>
+              <td>Vaccine if ≥10y (clean/minor) or ≥5y (dirty/major); TIG prophylaxis 250 IU IM if indicated; treatment TIG 500 units (reference note)</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+
+      <!-- ========================================================= -->
+      <!-- SOURCES -->
+      <!-- ========================================================= -->
+      <section id="sources">
+        <h2>13) Sources (as requested — at the end)</h2>
+
+        <p class="muted">
+          Note: This file is a <b>raw</b> compilation. Sources below correspond to the main schedules and clinical guidance points included.
+        </p>
+
+        <h3>Rabies</h3>
+        <ul>
+          <li><b>CDC — Rabies Post-Exposure Prophylaxis (PEP):</b> PEP schedules (0,3,7,14; +28 if immunocompromised), injection site guidance, previously vaccinated regimen (0,3; no RIG), pregnancy/age notes, and wound care principles.</li>
+          <li><b>CDC — Rabies Pre-Exposure Prophylaxis (PrEP):</b> 2-dose PrEP (0,7) and risk-category maintenance (titer/booster options).</li>
+          <li><b>CDC — Rabies Biologics:</b> HRIG dose (20 IU/kg), administration (wound infiltration, separate site), timing up to day 7, and common administration warnings.</li>
+          <li><b>WHO — Rabies PEP recommendations (ID):</b> One-week intradermal regimen options (0/3/7) and approach for previously immunized persons (0/3), plus immunoglobulin + wound washing in severe exposures.</li>
+        </ul>
+
+        <h3>Tetanus</h3>
+        <ul>
+          <li><b>CDC — Clinical Guidance for Wound Management to Prevent Tetanus:</b> wound care, antibiotic prophylaxis note, vaccine timing rules (5/10-year logic), TIG indications, TIG prophylaxis dose (250 IU IM).</li>
+          <li><b>CDC — Clinical Overview of Tetanus:</b> incubation and clinical summary points (forms, neonatal/cephalic notes).</li>
+          <li><b>CDC Pink Book — Tetanus chapter:</b> clinical forms/features, routine immunization schedules and booster logic, contraindications/precautions, adverse effects notes, and therapeutic TIG (500 units) discussion for tetanus disease management.</li>
+        </ul>
+      </section>
+
+    </main>
+
+ 
+    </footer>
+
+  </div>
+</body>
+</html>
